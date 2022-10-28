@@ -8,7 +8,7 @@ const ChatComponent = (props)=>{
     
     //defining a state for messageList
     const[messageInfo,setMessageInfo]=useState([]);
-    
+
 
     //on useEffect just update the chat if there's anything already
     useEffect(()=>{
@@ -104,7 +104,7 @@ const ChatComponent = (props)=>{
                     messageInfo.map((entry)=>
                     {   
                         return(
-                            <MessageComponent innerData={entry} />
+                            <MessageComponent innerData={entry} myUsername={props.username}/>
                         )
                     })
                 }

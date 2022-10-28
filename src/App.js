@@ -24,8 +24,6 @@ function App() {
       if(snapshot.exists()){
         console.log('room exists');
         console.log(snapshot.val());
-        
-        
       }
       else{
         console.log("No data available");    

@@ -59,6 +59,12 @@
   
 }
 
+.me{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .text{
   background-color: green;
   color: white;
@@ -70,4 +76,5 @@
   color: black;
   width: fit-content;
 }
+
 
