@@ -1,6 +1,6 @@
 import firebase from './Firebase';
 import { getDatabase, ref, onValue, push,remove } from 'firebase/database';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import MessageComponent from './MessageComponent';
 const ChatComponent = (props)=>{
    
