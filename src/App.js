@@ -1,23 +1,44 @@
 import logo from './logo.svg';
 import './App.css';
-
+import { useState } from 'react';
+import InputFormComponent from './InputFormComponent';
+import ChatComponent from './chat';
 function App() {
+  //useState to monitor username
+  const[id,setGeneratedID] = useState(0);
+
+  //a state to monitor if game has started
+  const[started,setStarted] = useState(false);
+
+  const[user,setUserName]= useState('');
+
+  const handleClick=(user)=>{
+    //on click generate a random number 
+    const randomID = Math.ceil(Math.random()*1000000);
+    console.log(randomID);
+    //change the state now
+
+    setGeneratedID(randomID);
+    setUserName(user);
+  }
+
+  
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* //when user clicks the button, they will get a random number and a chat will start */}
+      
+      {
+        
+        id!=0?
+        (
+          <ChatComponent uID={id} username={user}/>
+        )  :(
+
+          <InputFormComponent clickFunction={handleClick} />
+        )
+      }
     </div>
   );
 }
