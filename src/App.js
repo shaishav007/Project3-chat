@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { useState } from 'react';
 import InputFormComponent from './InputFormComponent';
@@ -8,7 +8,6 @@ function App() {
   const[id,setGeneratedID] = useState(0);
 
   //a state to monitor if game has started
-  const[started,setStarted] = useState(false);
 
   const[user,setUserName]= useState('');
 
@@ -31,7 +30,7 @@ function App() {
       
       {
         
-        id!=0?
+        id!==0?
         (
           <ChatComponent uID={id} username={user}/>
         )  :(
