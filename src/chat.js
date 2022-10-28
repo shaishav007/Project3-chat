@@ -31,8 +31,9 @@ const ChatComponent = (props)=>{
           }
           setMessageInfo(messages);
           
-        })
-    },[]);
+        });
+        //I don't like this step
+    },[props.uID]);
 
     const handleSubmit=(e) => {
         e.preventDefault();
