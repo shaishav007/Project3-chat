@@ -9,7 +9,31 @@ const ChatComponent = (props)=>{
     //defining a state for messageList
     const[messageInfo,setMessageInfo]=useState([]);
     
-    //on useEffect just update the chat if there's anything
+
+    //on useEffect just update the chat if there's anything already
+    useEffect(()=>{
+        const database = getDatabase(firebase)
+
+        // we then create a variable that makes reference to our database
+        const dbRef = ref(database,'session '+props.uID);
+        
+        // add an event listener to that variable that will fire
+        // from the database, and call that data 'response'.
+        onValue(dbRef, (response) => {
+           // here we use Firebase's .val() method to parse our database info the way we want it
+        //   console.log(response.val());
+          let messages =[];
+          for (let entry in response.val()){
+            // console.log(entry,response.val()[`${entry}`]);
+            //this was tricky
+            const info = response.val()[`${entry}`];
+            messages.push(info);
+          }
+          setMessageInfo(messages);
+          
+        })
+    },[]);
+
     const handleSubmit=(e) => {
         e.preventDefault();
         
@@ -20,7 +44,7 @@ const ChatComponent = (props)=>{
         const database = getDatabase(firebase)
 
         // we then create a variable that makes reference to our database
-        const dbRef = ref(database,'session'+props.uID);
+        const dbRef = ref(database,'session '+props.uID);
         
         // add an event listener to that variable that will fire
         // from the database, and call that data 'response'.
@@ -61,7 +85,7 @@ const ChatComponent = (props)=>{
         const database = getDatabase(firebase)
 
         // we then create a variable that makes reference to our database
-        const dbRef = ref(database,'session'+props.uID);
+        const dbRef = ref(database,'session '+props.uID);
         
         remove(dbRef).then(()=>{
             console.log('removed everything');
