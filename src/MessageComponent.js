@@ -8,7 +8,7 @@ const MessageComponent = (props)=>{
     return(
         
         <div className={
-            (props.innerData.username === props.myUsername)?
+            (props.innerData.username !== props.myUsername)?
             "msgBody":
             "me"
             }>
