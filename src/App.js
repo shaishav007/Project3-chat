@@ -5,18 +5,19 @@ import InputFormComponent from './InputFormComponent';
 import ChatComponent from './chat';
 import firebase from './Firebase';
 import { get, getDatabase, ref, child } from 'firebase/database';
+
 function App() {
   //useState to monitor username
   const[id,setGeneratedID] = useState(0);
-
   //a state to monitor if game has started
 
   const[user,setUserName]= useState('');
 
   const handleClick=(user,roomID,e)=>{
     //figure out where the click came from
-    console.log(e.target.value);
+    console.log(e);
     console.log('roomID',roomID);
+
     //check if the value in the database matches the id
     const database = getDatabase(firebase);
     const dbRef = ref(database);
@@ -46,7 +47,14 @@ function App() {
   }
 
   
+  const bringBack=()=>{
+    setGeneratedID(0);
+  }
 
+  const loadChatRoom=(roomNumber,user)=>{
+    setUserName(user);
+    setGeneratedID(roomNumber)
+  }
 
   return (
     <div className="App">
@@ -59,8 +67,13 @@ function App() {
           <ChatComponent uID={id} username={user}/>
         )  :(
 
-          <InputFormComponent clickFunction={handleClick} />
+          <InputFormComponent clickFunction={handleClick} loadChatroom={loadChatRoom}/>
         )
+      }
+      {
+        id!==0?
+          <button onClick={bringBack}>Go Back</button>
+        :<></>
       }
     </div>
   );
