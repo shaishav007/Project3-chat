@@ -5,7 +5,7 @@ import { useState } from 'react';
 import InputFormComponent from './InputFormComponent';
 import ChatComponent from './chat';
 import firebase from './Firebase';
-import { get, getDatabase, ref, child } from 'firebase/database';
+import { get, getDatabase, ref, child, push } from 'firebase/database';
 
 
 function App() {
@@ -49,13 +49,52 @@ function App() {
   }
 
   
-  const bringBack=()=>{
+  const bringBack=(roomNumber,user)=>{
+    pushFinalEntry(roomNumber,user);
+
+    console.log(`${user} just exited`);
+    //add the code to push user just exited out of the chat
     setGeneratedID(0);
   }
 
+  const pushInitialEntry=(roomNumber,user)=>{
+    //pushes the text initial entry
+    const database = getDatabase(firebase);
+    // pushes the message - has entered into the database
+
+    const dbRef = ref(database,'session '+roomNumber);
+    push(dbRef,{
+      'timeStamp':Date.now(),
+      'username':user,
+      'message':'has entered'
+    });
+  }
+
+  const pushFinalEntry = (roomNumber,user)=>{
+    console.log(roomNumber,user);
+    //pushes the text final entry
+   
+    const database = getDatabase(firebase);
+    // pushes the message - has entered into the database
+
+    const dbRef = ref(database,'session '+roomNumber);
+    push(dbRef,{
+      'timeStamp':Date.now(),
+      'username':user,
+      'message':'has exited'
+    });
+  }
+
   const loadChatRoom=(roomNumber,user)=>{
+
+    //push that user has entered in the database
+    console.log('user has entered');
+    pushInitialEntry(roomNumber,user);
+    
     setUserName(user);
-    setGeneratedID(roomNumber)
+    setGeneratedID(roomNumber);
+    
+    
   }
 
   return (
@@ -74,7 +113,7 @@ function App() {
       }
       {
         id!==0?
-          <button onClick={bringBack}>Go Back</button>
+          <button onClick={()=>{bringBack(id,user)}}>Go Back</button>
         :<></>
       }
     </div>

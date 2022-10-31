@@ -1,6 +1,6 @@
 import firebase from './Firebase';
 import { getDatabase, ref, onValue, push,remove } from 'firebase/database';
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useRef} from 'react';
 import MessageComponent from './MessageComponent';
 const ChatComponent = (props)=>{
    
@@ -9,6 +9,8 @@ const ChatComponent = (props)=>{
     //defining a state for messageList
     const[messageInfo,setMessageInfo]=useState([]);
 
+    //defining a ref variable, onValue, just scroll this into view
+    const messageEndRef = useRef(null)
 
     //on useEffect just update the chat if there's anything already
     useEffect(()=>{
@@ -30,17 +32,21 @@ const ChatComponent = (props)=>{
             messages.push(info);
           }
           setMessageInfo(messages);
+
+          //scroll the div into view here
+        //   console.log(messageEndRef);
+          messageEndRef.current.scrollIntoView();
           
         });
+        //this is not supposed to run twice
+        console.log('This should not run twice');
+        
         //I don't like this step
     },[props.uID]);
 
     const handleSubmit=(e) => {
         e.preventDefault();
-        
-        console.log('submit clicked');
 
-        
         // create a variable that holds our database details
         const database = getDatabase(firebase)
 
@@ -64,7 +70,7 @@ const ChatComponent = (props)=>{
         })
 
         //now that we have what's in the message we just need the message and the timestamp and the username so we will have a dummy username 'user1' for it
-
+        
         const entry={
             'timeStamp':Date.now(),
             'username':props.username,
@@ -94,6 +100,10 @@ const ChatComponent = (props)=>{
 
     }
 
+    const userIsHere=(userStatus)=>{
+        alert(userStatus);
+    }
+
     return(
         <section>
             <div className="chatWindow">
@@ -104,10 +114,12 @@ const ChatComponent = (props)=>{
                     messageInfo.map((entry)=>
                     {   
                         return(
-                            <MessageComponent innerData={entry} myUsername={props.username}/>
+                            <MessageComponent innerData={entry} myUsername={props.username} userIsHere={userIsHere}/>
                         )
                     })
                 }
+                {/* Empty div to scroll to */}
+                <div ref={messageEndRef} className="messageEndDiv"/>
             </div>
             <div className="messageForm">
                  <form >
