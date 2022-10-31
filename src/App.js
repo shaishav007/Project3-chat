@@ -1,10 +1,12 @@
+import "./scss/styles.scss"
+// import './App.css';
 
-import './App.css';
 import { useState } from 'react';
 import InputFormComponent from './InputFormComponent';
 import ChatComponent from './chat';
 import firebase from './Firebase';
 import { get, getDatabase, ref, child } from 'firebase/database';
+
 
 function App() {
   //useState to monitor username
