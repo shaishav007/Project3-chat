@@ -1,0 +1,60 @@
+.chatWindow{
+    border: 1px solid black;
+    width: 500px;
+    height: 300px;
+    margin: 1rem auto;
+    overflow: auto;
+    position: relative;
+  
+    border-radius: 20px;
+    
+  
+  }
+  
+  .msgBody{
+    padding: 1%;
+    position: relative;
+    
+    //need a margin at the bottom
+    margin: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    
+  }
+  
+  .me{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    
+    margin: 5px;
+  }
+  
+  .text{
+    background-color: green;
+    color: white;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 0px 0 0 10px;
+  }
+  
+  .userName{
+    background-color: lightblue;
+    color: black;
+    width: fit-content;
+    padding: 5px;
+    border-radius:10px 0 0 0 ;
+  }
+
+.messageEndDiv{
+    transform: translateY(50px);
+    height: 10px;
+}
+
+.enterOrExit{
+  color: black;
+  background: beige;
+}
