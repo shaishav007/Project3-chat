@@ -12,9 +12,6 @@ const ChatComponent = (props)=>{
     //defining a ref variable, onValue, just scroll this into view
     const messageEndRef = useRef(null)
 
-    //defining a state for when userEnters
-    const [userEntered,setUserEntered] = useState(false);
-
     //on useEffect just update the chat if there's anything already
     useEffect(()=>{
         const database = getDatabase(firebase)
