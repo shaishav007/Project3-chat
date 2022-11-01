@@ -224,13 +224,14 @@ html {
 .chatWindow {
   border: 1px solid black;
   width: 500px;
-  height: 300px;
+  height: 80vh;
   margin: 2% auto 0 auto;
   overflow: auto;
   position: relative;
   width: min(50%, 120rem);
   border-radius: 2rem 2rem 0 0;
   box-shadow: -10px 4px 67px -1px rgba(166, 133, 175, 0.75);
+  min-width: 320px;
 }
 
 .messageForm {
@@ -241,6 +242,7 @@ html {
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: nowrap;
+  min-width: 320px;
 }
 .messageForm label {
   display: none;
@@ -285,11 +287,13 @@ html {
 
 .imgDiv {
   width: 3rem;
+  height: 3rem;
   z-index: 100;
 }
 .imgDiv img {
   width: 100%;
   border-radius: 50%;
+  height: 100%;
 }
 
 .me {
@@ -343,11 +347,18 @@ html {
   background: red;
   color: white;
   font-size: 20px;
-  border-radius: 50%;
-  height: 200px;
-  width: 200px;
+  border-radius: 10px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   text-align: center;
-  padding: 0;
+  padding: 1%;
+  position: fixed;
+  top: 0;
+  right: 10%;
 }
 
 .entryForm {
@@ -358,6 +369,7 @@ html {
   border-radius: 5rem;
   background: trnasparent;
   box-shadow: -10px 4px 67px -1px rgba(166, 133, 175, 0.75);
+  min-width: 320px;
 }
 
 .inputContainer {
@@ -434,4 +446,11 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+.goBackButton {
+  position: fixed;
+  padding: 1%;
+  top: 0%;
+  left: 10%;
+  font-size: 20px;
 }/*# sourceMappingURL=styles.css.map */

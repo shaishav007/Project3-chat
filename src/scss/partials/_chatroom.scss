@@ -3,19 +3,21 @@
 .chatWindow{
     border: 1px solid black;
     width: 500px;
-    height: 300px;
+    height: 80vh;
     margin: 2% auto 0 auto;
     overflow: auto;
     position: relative;
     width: min(50%,120rem);
     border-radius: 2rem 2rem 0 0 ;
     box-shadow: $boxShadowConfig1;
+    min-width: 320px;
   }
 
   .messageForm{
     width: min(50%,120rem);
       margin: 0 auto;
       @include flex(row, flex-start,flex-start,nowrap);
+      min-width: 320px;
     label{
       display: none;
     }
@@ -60,10 +62,12 @@
   
   .imgDiv{
     width: 3rem;
+    height: 3rem;
     z-index: 100;
     img{
       width: 100%;
       border-radius: 50%;
+      height: 100%;
     }
   }
 
@@ -113,9 +117,12 @@
   background: red;
   color: white;
   font-size: 20px;
-  border-radius: 50%;
-  height: 200px;
-  width: 200px;
+  border-radius: 10px;
+  height: fit-content;
+  width: fit-content;
   text-align: center;
-  padding: 0;
+  padding: 1%;
+  position: fixed;
+  top:0;
+  right:10%;
 }

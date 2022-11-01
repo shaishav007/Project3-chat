@@ -6,11 +6,14 @@ import InputFormComponent from './InputFormComponent';
 import ChatComponent from './chat';
 import firebase from './Firebase';
 import { get, getDatabase, ref, push, set } from 'firebase/database';
-
+import axios from 'axios';
 
 function App() {
   //useState to monitor username
   const[id,setGeneratedID] = useState(0);
+
+  //make a state for icon
+  const[icon, setIcon]= useState('');
 
   //a state to monitor if game has started
   const[user,setUserName]= useState('');
@@ -72,6 +75,13 @@ function App() {
     });
   }
 
+  //this function returns a random url of a dog picture
+  const getRandomDog = ()=>{
+    axios.get('https://dog.ceo/api/breeds/image/random').then((response)=>{
+      setIcon(response.data.message);
+    })
+  }
+
   //the function takes the number and the username and initialises that chat window.
   const loadChatRoom=(roomNumber,user)=>{
     //just before the chatroom is added, also add the current number of users? 
@@ -81,6 +91,10 @@ function App() {
     console.log('user has entered');
     pushInitialEntry(roomNumber,user);
     
+    //our user also needs an icon so we will have to provide the guy one
+    getRandomDog();
+    
+
     setUserName(user);
     setGeneratedID(roomNumber);
 
@@ -93,7 +107,7 @@ function App() {
       {
         id!==0?
         (
-          <ChatComponent uID={id} username={user} />
+          <ChatComponent uID={id} username={user} iconUrl={icon}/>
         )  :(
 
           <InputFormComponent    loadChatroom={loadChatRoom}/>
@@ -101,7 +115,7 @@ function App() {
       }
       {
         id!==0?
-          <button onClick={()=>{bringBack(id,user)}}>Go Back</button>
+          <button onClick={()=>{bringBack(id,user)}} className="goBackButton">Go Back</button>
         :<></>
       }
     </div>

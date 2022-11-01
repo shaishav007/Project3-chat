@@ -86,7 +86,8 @@ const ChatComponent = (props)=>{
         const entry={
             'timeStamp':Date.now(),
             'username':props.username,
-            'message':inputState
+            'message':inputState,
+            'iconUrl':props.iconUrl
         };
 
         //push this entry into the current reference
