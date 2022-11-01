@@ -23,7 +23,7 @@ const MessageComponent = (props)=>{
             </div>
             <div className='msgFlexParent'>
                 <div className="imgDiv">
-                    <img src={require('./assets/dog_placeholderPic.jpg')} alt={props.innerData.username+'s pic'}/>
+                    <img src={props.innerData.iconUrl} alt={props.innerData.username+'s pic'}/>
                 </div>
                 <div className="text">
                     {props.innerData.message}
