@@ -1,10 +1,18 @@
 @use "./partials/setup";
 @use "./partials/chatroom";
-
+@use "./partials/inputForm";
+@use "./partials/variables";
 
 .App {
     text-align: center;
+    
   }
+
+  body{
+    background-color: lightblue;
+  }
+
+
   
   .App-logo {
     height: 40vmin;
