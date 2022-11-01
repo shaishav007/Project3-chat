@@ -225,10 +225,35 @@ html {
   border: 1px solid black;
   width: 500px;
   height: 300px;
-  margin: 1rem auto;
+  margin: 2% auto 0 auto;
   overflow: auto;
   position: relative;
-  border-radius: 20px;
+  width: min(50%, 120rem);
+  border-radius: 2rem 2rem 0 0;
+  box-shadow: -10px 4px 67px -1px rgba(166, 133, 175, 0.75);
+}
+
+.messageForm {
+  width: min(50%, 120rem);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+.messageForm label {
+  display: none;
+}
+.messageForm button {
+  padding: 1rem;
+  margin: 0;
+  border-radius: 0 0 2rem 0;
+}
+.messageForm input {
+  flex-grow: 1;
+  padding: 1rem;
+  border-radius: 0 0 0 2rem;
 }
 
 .msgBody {
@@ -239,12 +264,46 @@ html {
   flex-direction: column;
   align-items: flex-start;
 }
+.msgBody .msgFlexParent {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.msgBody .text {
+  background-color: green;
+  color: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 0px 10px 10px 0px;
+  padding-left: 25px;
+  transform: translateX(-15px);
+}
+
+.imgDiv {
+  width: 3rem;
+  z-index: 100;
+}
+.imgDiv img {
+  width: 100%;
+  border-radius: 50%;
+}
 
 .me {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   margin: 5px;
+}
+.me .msgFlexParent {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
 .text {
@@ -253,8 +312,10 @@ html {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  padding: 5px;
-  border-radius: 0px 0 0 10px;
+  padding: 10px;
+  border-radius: 10px 0 0 10px;
+  padding-right: 25px;
+  transform: translateX(15px);
 }
 
 .userName {
@@ -263,8 +324,9 @@ html {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  padding: 5px;
+  padding: 0;
   border-radius: 10px 0 0 0;
+  font-size: 0.8rem;
 }
 
 .messageEndDiv {
@@ -272,8 +334,62 @@ html {
   height: 10px;
 }
 
+.enterOrExit {
+  color: black;
+  background: beige;
+}
+
+.bigDeleteButton {
+  background: red;
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  text-align: center;
+  padding: 0;
+}
+
+.entryForm {
+  border: 2px solid black;
+  width: min(50%, 120rem);
+  margin: 10% auto;
+  padding: 10%;
+  border-radius: 5rem;
+  background: trnasparent;
+  box-shadow: -10px 4px 67px -1px rgba(166, 133, 175, 0.75);
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 3%;
+}
+.inputContainer label {
+  padding: 3%;
+}
+.inputContainer input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid green;
+}
+
+button {
+  padding: 5%;
+  border-radius: 10px;
+  background: lightgreen;
+  margin: 1rem;
+}
+
 .App {
   text-align: center;
+}
+
+body {
+  background-color: lightblue;
 }
 
 .App-logo {

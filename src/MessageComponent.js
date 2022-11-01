@@ -1,10 +1,5 @@
-//making a placeholder function for messagecomponent
-
 
 const MessageComponent = (props)=>{
-
-    //now if the message says 'has entered', put that as a text in div, we don't actually need a state, we just have to say that user is in and not display the user
-    
 
     return(
         <>
@@ -26,8 +21,13 @@ const MessageComponent = (props)=>{
                 {props.innerData.username}
                 
             </div>
-            <div className="text">
-                {props.innerData.message}
+            <div className='msgFlexParent'>
+                <div className="imgDiv">
+                    <img src={require('./assets/dog_placeholderPic.jpg')} alt={props.innerData.username+'s pic'}/>
+                </div>
+                <div className="text">
+                    {props.innerData.message}
+                </div>
             </div>
             
         </div>)

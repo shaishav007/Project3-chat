@@ -1,0 +1,9 @@
+@mixin flex($row,$justify,$align,$wrap) {
+    display: flex;
+    flex-direction: $row;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+}
+
+$boxShadowConfig1: -10px 4px 67px -1px rgba(166,133,175,0.75);
