@@ -5,7 +5,7 @@ import { useState } from 'react';
 import InputFormComponent from './InputFormComponent';
 import ChatComponent from './chat';
 import firebase from './Firebase';
-import { get, getDatabase, ref, child, push, set } from 'firebase/database';
+import { get, getDatabase, ref, push, set } from 'firebase/database';
 
 
 function App() {
