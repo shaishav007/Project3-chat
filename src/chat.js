@@ -1,36 +1,77 @@
 import firebase from './Firebase';
-import { getDatabase, ref, onValue, push,remove } from 'firebase/database';
-import {useState} from 'react';
+import { getDatabase, ref, onValue, push,remove, get, set } from 'firebase/database';
+import {useState,useEffect,useRef} from 'react';
 import MessageComponent from './MessageComponent';
 const ChatComponent = (props)=>{
-   
+   //defining a state for getting input from the user in the chat window
     const [inputState, setInputState] = useState('');
     
     //defining a state for messageList
     const[messageInfo,setMessageInfo]=useState([]);
-    
-    //on useEffect just update the chat if there's anything
-    const handleSubmit=(e) => {
-        e.preventDefault();
-        
-        console.log('submit clicked');
 
-        
-        // create a variable that holds our database details
+    //defining a ref variable, onValue, just scroll this into view
+    const messageEndRef = useRef(null)
+
+    //one state for the userCount variable
+    const [userCount,setUserCount]=useState(0);
+
+    //function to get the userCount data from the database
+    const updateUserCount=()=>{
+        //get the userCount variable from the database
+        const database = getDatabase(firebase);
+        const dbRef = ref(database,'chatRoomData');
+        //now get the datafrom the database
+        get(dbRef,'userCount').then((snapshot)=>{
+            if(snapshot.val()===null){
+                //which means there is no userCount present, set it 
+                set(dbRef,{'userCount':1})
+            }
+            //weird structure
+            setUserCount(snapshot.val().userCount);
+        }).catch((error)=>{
+            console.log(error);
+        });
+    }
+
+    //a useEffect to update the count?- MAYBE THERE IS A BETTER WAY, THIS WILL FIRE 1000s of times
+    useEffect(()=>{
+        updateUserCount();
+    })
+
+    //This is the useEffect for chats. Update the chat when the page loads
+    useEffect(()=>{
         const database = getDatabase(firebase)
-
-        // we then create a variable that makes reference to our database
-        const dbRef = ref(database,'session'+props.uID);
-        
-        // add an event listener to that variable that will fire
-        // from the database, and call that data 'response'.
+        const dbRef = ref(database,'session '+props.uID);
         onValue(dbRef, (response) => {
-           // here we use Firebase's .val() method to parse our database info the way we want it
-        //   console.log(response.val());
+          //for all messages in the response, display them on the UI
           let messages =[];
           for (let entry in response.val()){
-            // console.log(entry,response.val()[`${entry}`]);
             //this was tricky
+            const info = response.val()[`${entry}`];
+            messages.push(info);
+          }
+          setMessageInfo(messages);
+          //scroll the div into view here
+          messageEndRef.current.scrollIntoView();
+        });
+
+        //I don't like writing props.uID here. I want it to be blank but netlify refuses to run on []
+    },[props.uID]);
+
+    
+    //When the user clicks send message then the message is sent.
+    const handleSubmit=(e) => {
+        //first avoid refresh
+        e.preventDefault();
+
+        //SOME WORK TO BE DONE HERE
+        //THIS IS AN EXAMPLE OF REPEATED CODE. I WANT TO REWRITE THIS CODE 
+        const database = getDatabase(firebase)
+        const dbRef = ref(database,'session '+props.uID);
+        onValue(dbRef, (response) => {
+           // here we use Firebase's .val() method to parse our database info the way we want it
+          let messages =[];
+          for (let entry in response.val()){
             const info = response.val()[`${entry}`];
             messages.push(info);
           }
@@ -38,12 +79,13 @@ const ChatComponent = (props)=>{
           
         })
 
-        //now that we have what's in the message we just need the message and the timestamp and the username so we will have a dummy username 'user1' for it
-
+        //now that we have what's in the message we just need the message and the timestamp and the username so we can just put that in
+        
         const entry={
             'timeStamp':Date.now(),
             'username':props.username,
-            'message':inputState
+            'message':inputState,
+            'iconUrl':props.iconUrl
         };
 
         //push this entry into the current reference
@@ -51,41 +93,50 @@ const ChatComponent = (props)=>{
         setInputState('');
     };
 
+    //simple function to handle change
     const handleChange=(e)=>{
         //whenever anybody writes anything just update the state of the user message. and on send push to db
         setInputState(e.target.value);
     }
 
+    //when user clicks on end session just delete the chat entry
     const deleteEverything=()=>{
         //reimport database here and delete everything
         const database = getDatabase(firebase)
 
         // we then create a variable that makes reference to our database
-        const dbRef = ref(database,'session'+props.uID);
+        const dbRef = ref(database,'session '+props.uID);
         
-        remove(dbRef).then(()=>{
-            console.log('removed everything');
-        })
-
+        remove(dbRef)
     }
+
+    
 
     return(
         <section>
             <div className="chatWindow">
+                <div>
                 chat id:{props.uID},
                 player name:{props.username}
+                </div>
+                <div>
+                    {userCount} people in here
+                </div>
+                
                 {/* for each message in messages, make a message component */}
                 {
                     messageInfo.map((entry)=>
                     {   
                         return(
-                            <MessageComponent innerData={entry} />
+                            <MessageComponent innerData={entry} myUsername={props.username} />
                         )
                     })
                 }
+                {/* Empty div to scroll to */}
+                <div ref={messageEndRef} className="messageEndDiv"/>
             </div>
-            <div className="messageForm">
-                 <form >
+            <div >
+                 <form className="messageForm">
                     <label>
                         type message and send:
                     </label>
@@ -101,14 +152,4 @@ const ChatComponent = (props)=>{
 export default ChatComponent;
 
 
-//So we have App.js where we generate a random number as the unique id. And then that unique ID and username are passed as a prop to chatcomponent, uID also the same as session ID for the database
-
-//now chatcomponent has an inputfield where there is a button to send an image. 
-
-//when the app starts, a useEffect is run to fill the value from the database? or maybe not coz the database is empty right now. We'll see. Anyway it just has to run once.
-
-//use a state variable for whatever is typed in the input
-
-//so when the user types a message and clicks on the send button, the handleclick should push the entry to the database in the format and then change the inputstate to ''.
-
-//in the onValue method when the data is received, it just has to be populated appropriately in the chatwindow div of the chatcomponent. Haven't reached this but I have an instinct it will work.
+//I think this needs a major rewrite but also what do I do with the amount of users. Counting them? I think that has to be people whose internet connection is not working and they might not be connected to firebase and might drop out. Wonder how they get that?
