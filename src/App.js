@@ -26,7 +26,6 @@ function App() {
     //update the user count
     updateUserCount(-1);
 
-    console.log(`${user} just exited`);
     //add the code to exit out of the chat
     setGeneratedID(0);
   }
@@ -48,7 +47,7 @@ function App() {
 
   //pushing the entry that user has exited
   const pushFinalEntry = (roomNumber,user)=>{
-    console.log(roomNumber,user);
+
     //pushes the text final entry
    
     const database = getDatabase(firebase);
@@ -88,7 +87,7 @@ function App() {
     updateUserCount(1);
 
     //push that user has entered in the database
-    console.log('user has entered');
+
     pushInitialEntry(roomNumber,user);
     
     //our user also needs an icon so we will have to provide the guy one

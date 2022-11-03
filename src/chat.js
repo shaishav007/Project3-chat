@@ -54,8 +54,6 @@ const ChatComponent = (props)=>{
           //scroll the div into view here
           messageEndRef.current.scrollIntoView();
         });
-        //this is not supposed to run twice
-        console.log('This should not run twice');
 
         //I don't like writing props.uID here. I want it to be blank but netlify refuses to run on []
     },[props.uID]);
@@ -109,9 +107,7 @@ const ChatComponent = (props)=>{
         // we then create a variable that makes reference to our database
         const dbRef = ref(database,'session '+props.uID);
         
-        remove(dbRef).then(()=>{
-            console.log('removed everything');
-        })
+        remove(dbRef)
     }
 
     
